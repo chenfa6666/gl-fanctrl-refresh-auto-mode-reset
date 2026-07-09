@@ -148,7 +148,8 @@ return {
       numberDrafts: {},
       manualSeq: 0,
       manualTimer: null,
-      timer: null
+      timer: null,
+      initialized: false
     };
   },
   created: function () {
@@ -194,6 +195,7 @@ return {
       this.loading = true;
       try {
         this.normalize(await this.rpc("get_status", {}));
+        this.initialized = true;
       } finally {
         this.loading = false;
       }
@@ -260,6 +262,10 @@ return {
       }
     },
     scheduleManual: function (persist, value) {
+      if (!this.initialized || this.currentConfig().mode !== "manual") {
+          this.manualDraft = clamp(value == null ? this.manualDraft : value, 0, 100);
+          return;
+      }
       var self = this;
       var nextValue = clamp(value == null ? this.manualDraft : value, 0, 100);
       this.manualDraft = nextValue;
