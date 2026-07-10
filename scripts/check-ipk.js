@@ -4,10 +4,14 @@ const path = require('path');
 const { execFileSync } = require('child_process');
 
 const root = path.resolve(__dirname, '..');
-const ipk = process.argv[2] || path.join(root, 'dist', 'gl-fanctrl_0.1.0_all.ipk');
+const pkg = require(path.join(root, 'package.json'));
+const pkgName = pkg.name;
+const version = pkg.version;
+const arch = 'all';
+const ipk = process.argv[2] || path.join(root, 'dist', `${pkgName}_${version}_${arch}.ipk`);
 
-if (!fs.existsSync(targetIpk)) {
-  throw new Error(`IPK not found: ${targetIpk}`);
+if (!fs.existsSync(ipk)) {
+  throw new Error(`IPK not found: ${ipk}`);
 }
 
 const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'gl-fanctrl-ipk-'));
