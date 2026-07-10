@@ -6,8 +6,8 @@ const { execFileSync } = require('child_process');
 const root = path.resolve(__dirname, '..');
 const ipk = process.argv[2] || path.join(root, 'dist', 'gl-fanctrl_0.1.0_all.ipk');
 
-if (!fs.existsSync(ipk)) {
-  throw new Error(`IPK not found: ${ipk}`);
+if (!fs.existsSync(targetIpk)) {
+  throw new Error(`IPK not found: ${targetIpk}`);
 }
 
 const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'gl-fanctrl-ipk-'));
